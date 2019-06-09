@@ -93,7 +93,7 @@ function BoardSquare({ squareColor, columnIndex, rowIndex }) {
     backgroundColor: squareColor
   };
 
-  if (squareColor === "white" || "green") {
+  if (squareColor === "white" || squareColor === "green") {
     styles.border = "1px solid grey";
     styles.boxSizing = "border-box";
   }
