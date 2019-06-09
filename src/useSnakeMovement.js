@@ -96,13 +96,3 @@ function useSnakeMovement(startingPosition, size) {
 }
 
 export default useSnakeMovement;
-
-// what do I need to do?
-
-// one effect for momentum:
-// use direction
-// set interval to move in direction
-// clear interval when direction changes
-
-// one effect for keyboard presses
-// change direction on keyboard press

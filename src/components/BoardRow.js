@@ -21,23 +21,19 @@ function BoardRow({ rowIndex, size, headPosition }) {
 export default BoardRow;
 
 function buildRowOptions(rowIndex, size, headPosition) {
-  let i = 1;
+  let columnIndex = 1;
   const row = [];
 
-  for (i; i <= size; i++) {
+  for (columnIndex; columnIndex <= size; columnIndex++) {
     const options = {
+      headPosition,
       rowIndex,
-      columnIndex: i,
-      key: i
+      columnIndex,
+      key: columnIndex
     };
 
-    options.squareColor = setBoardColors(rowIndex, size, i);
-
-    if (
-      options.rowIndex === headPosition.depth &&
-      options.columnIndex === headPosition.width
-    ) {
-      options.squareColor = "green";
+    if (isBorder(rowIndex, columnIndex, size)) {
+      options.isBorder = true;
     }
 
     row.push(options);
@@ -46,14 +42,11 @@ function buildRowOptions(rowIndex, size, headPosition) {
   return row;
 }
 
-function setBoardColors(rowIndex, size, i) {
-  let squareColor;
-
-  if (rowIndex === 1 || rowIndex === size) {
-    squareColor = "black";
-  } else {
-    squareColor = i === 1 || i === size ? "black" : "white";
-  }
-
-  return squareColor;
+function isBorder(rowIndex, columnIndex, size) {
+  return (
+    rowIndex === 1 ||
+    rowIndex === size ||
+    columnIndex === 1 ||
+    columnIndex === size
+  );
 }

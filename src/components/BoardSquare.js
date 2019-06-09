@@ -1,13 +1,29 @@
 import React from "react";
+import { connect } from "react-redux";
 
-function BoardSquare({ squareColor, columnIndex, rowIndex }) {
+function BoardSquare({
+  isBorder,
+  columnIndex,
+  rowIndex,
+  headPosition,
+  fruitPositions
+}) {
   const styles = {
     width: "60px",
     height: "60px",
-    backgroundColor: squareColor
+    backgroundColor: setSquareColor(
+      isBorder,
+      rowIndex,
+      columnIndex,
+      headPosition,
+      fruitPositions
+    )
   };
 
-  if (squareColor === "white" || squareColor === "green") {
+  if (
+    styles.backgroundColor === "white" ||
+    styles.backgroundColor === "green"
+  ) {
     styles.border = "1px solid grey";
     styles.boxSizing = "border-box";
   }
@@ -15,4 +31,36 @@ function BoardSquare({ squareColor, columnIndex, rowIndex }) {
   return <div style={styles} id={`${columnIndex}x${rowIndex}`} />;
 }
 
-export default BoardSquare
+const mapStateToProps = state => {
+  return { fruitPositions: state.fruit.fruitPositions };
+};
+
+export default connect(mapStateToProps)(BoardSquare);
+
+function setSquareColor(
+  isBorder,
+  rowIndex,
+  columnIndex,
+  headPosition,
+  fruitPositions
+) {
+  if (rowIndex === headPosition.depth && columnIndex === headPosition.width) {
+    return "green";
+  }
+
+  // console.log(fruitPositions);
+
+  for (let i = 0; i < fruitPositions.length; i++) {
+    let fruit = fruitPositions[i];
+
+    if (rowIndex === fruit.depth && columnIndex === fruit.width) {
+      return "blue";
+    }
+  }
+
+  if (isBorder) {
+    return "black";
+  }
+
+  return "white";
+}
