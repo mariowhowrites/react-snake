@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function useSnakeMovement(startingPosition) {
+function useSnakeMovement(startingPosition, size) {
   let [headPosition, setHeadPosition] = useState(startingPosition);
   let [direction, setDirection] = useState("up");
 
@@ -8,7 +8,7 @@ function useSnakeMovement(startingPosition) {
     let newDepth = headPosition.depth - 1;
 
     if (newDepth < 2) {
-      newDepth = 10;
+      newDepth = size - 1;
     }
 
     setHeadPosition({
@@ -20,7 +20,7 @@ function useSnakeMovement(startingPosition) {
   let moveDown = () => {
     let newDepth = headPosition.depth + 1;
 
-    if (newDepth > 10) {
+    if (newDepth > size - 1) {
       newDepth = 2;
     }
 
@@ -34,7 +34,7 @@ function useSnakeMovement(startingPosition) {
     let newWidth = headPosition.width - 1;
 
     if (newWidth < 2) {
-      newWidth = 10;
+      newWidth = size - 1;
     }
 
     setHeadPosition({
@@ -46,7 +46,7 @@ function useSnakeMovement(startingPosition) {
   let moveRight = () => {
     let newWidth = headPosition.width + 1;
 
-    if (newWidth > 10) {
+    if (newWidth > size - 1) {
       newWidth = 2;
     }
 
