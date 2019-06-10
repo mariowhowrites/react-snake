@@ -1,23 +1,35 @@
 import {
+  SNAKE_INIT,
   CHANGE_POSITION,
   CHANGE_DIRECTION,
-  QUEUE_SNAKE,
-  GROW_SNAKE
+  SNAKE_QUEUE,
+  SNAKE_GROW,
+  SNAKE_CLEAR
 } from "../types";
 
 const defaultState = {
   direction: "UP",
   snakeQueue: [],
-  snake: [
-    {
-      width: 6,
-      depth: 6
-    }
-  ]
+  snake: []
 };
 
 export default function snakeReducer(state = defaultState, action) {
   switch (action.type) {
+    case SNAKE_INIT:
+      const startingSnake = {
+        depth: Math.ceil(action.payload / 2),
+        width: Math.ceil(action.payload / 2)
+      };
+
+      return {
+        ...state,
+        snake: [startingSnake]
+      };
+
+    case SNAKE_CLEAR:
+      console.log("should clear snake...");
+      return defaultState;
+
     case CHANGE_POSITION:
       if (state.snakeQueue.length >= 1) {
         return state;
@@ -31,12 +43,14 @@ export default function snakeReducer(state = defaultState, action) {
         ...state,
         snake: newSnake
       };
+
     case CHANGE_DIRECTION:
       return {
         ...state,
         direction: action.payload
       };
-    case QUEUE_SNAKE:
+
+    case SNAKE_QUEUE:
       let queue = [...state.snakeQueue];
 
       queue.push(action.payload);
@@ -45,7 +59,8 @@ export default function snakeReducer(state = defaultState, action) {
         ...state,
         snakeQueue: queue
       };
-    case GROW_SNAKE:
+
+    case SNAKE_GROW:
       const grownSnake = [...state.snake];
       let newQueue = [...state.snakeQueue];
 
@@ -56,6 +71,7 @@ export default function snakeReducer(state = defaultState, action) {
         snake: grownSnake,
         snakeQueue: newQueue
       };
+
     default:
       return state;
   }

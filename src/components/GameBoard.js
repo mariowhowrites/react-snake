@@ -1,25 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import BoardRows from "./BoardRows";
 import useSnakeMovement from "../useSnakeMovement";
-import { addFruit, changePosition, changeDirection } from "../store/actions";
+import { changePosition, changeDirection, startGame } from "../store/actions";
 
 function GameBoard({
   snake,
   size,
   score,
-  addFruit,
+  playing,
   changeDirection,
   changePosition,
-  direction
+  direction,
+  highScores,
+  startGame
 }) {
-
-  useSnakeMovement(snake, size, changePosition, changeDirection, direction);
-
-  useEffect(() => {
-    addFruit(size, 2);
-  }, [addFruit, size]);
+  useSnakeMovement(
+    snake,
+    size,
+    playing,
+    changePosition,
+    changeDirection,
+    direction
+  );
 
   return (
     <div
@@ -30,7 +34,14 @@ function GameBoard({
       }}
     >
       <BoardRows />
+      {!playing && <button onClick={startGame}>Start Game</button>}
       <p>SCORE: {score}</p>
+      <p>High Scores:</p>
+      <ol>
+        {highScores.map((score, index) => {
+          return <li key={index}>{score}</li>;
+        })}
+      </ol>
     </div>
   );
 }
@@ -40,6 +51,8 @@ const mapStateToProps = state => {
     snake: state.snake.snake,
     size: state.game.size,
     score: state.game.score,
+    highScores: state.game.highScores,
+    playing: state.game.playing,
     direction: state.snake.direction
   };
 };
@@ -47,8 +60,8 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    addFruit: (size, number) => addFruit(size, number),
     changePosition: position => changePosition(position),
-    changeDirection: direction => changeDirection(direction)
+    changeDirection: direction => changeDirection(direction),
+    startGame
   }
 )(GameBoard);

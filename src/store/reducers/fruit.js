@@ -1,4 +1,4 @@
-import { ADD_FRUIT, COLLECT_FRUIT } from "../types";
+import { FRUIT_ADD, FRUIT_COLLECT, FRUIT_CLEAR } from "../types";
 
 const defaultState = {
   fruitPositions: []
@@ -6,19 +6,25 @@ const defaultState = {
 
 export default function fruitReducer(state = defaultState, action) {
   switch (action.type) {
-    case ADD_FRUIT:
+    case FRUIT_ADD:
       return {
         ...state,
         fruitPositions: [...action.payload, ...state.fruitPositions]
       };
-    case COLLECT_FRUIT:
-      console.log(action);
+
+    case FRUIT_COLLECT:
+      const newFruit = [...state.fruitPositions].filter(
+        (_, index) => index !== action.payload
+      );
+
       return {
         ...state,
-        fruitPositions: state.fruitPositions.filter(
-          (_, index) => index !== action.payload
-        )
+        fruitPositions: newFruit
       };
+
+    case FRUIT_CLEAR:
+      return defaultState;
+
     default:
       return state;
   }

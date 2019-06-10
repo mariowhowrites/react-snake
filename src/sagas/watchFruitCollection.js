@@ -3,12 +3,12 @@ import { takeEvery, put, select } from "redux-saga/effects";
 import * as types from "../store/types";
 
 export default function* watchFruitCollection() {
-  yield takeEvery(types.COLLECT_FRUIT, handleFruitCollection);
+  yield takeEvery(types.FRUIT_COLLECT, handleFruitCollection);
 }
 
 function* handleFruitCollection({ payload }) {
   const size = yield select(state => state.game.size);
-  yield put({ type: types.ADD_FRUIT, payload: [makeFruit(size)] });
+  yield put({ type: types.FRUIT_ADD, payload: [makeFruit(size)] });
   yield put({ type: types.ADD_SCORE });
 }
 

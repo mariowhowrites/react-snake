@@ -1,7 +1,7 @@
 import * as types from "./types";
 
 /**
- * Direction actions
+ * SNAKE ACTIONS
  */
 
 export const changeDirection = direction => ({
@@ -9,14 +9,20 @@ export const changeDirection = direction => ({
   payload: direction
 });
 
-/**
- * POSITION ACTIONS
- */
-
 export const changePosition = position => {
   return {
     type: types.CHANGE_POSITION,
     payload: position
+  };
+};
+
+/**
+ * GAME ACTIONS
+ */
+
+export const startGame = () => {
+  return {
+    type: types.GAME_START
   };
 };
 
@@ -32,7 +38,7 @@ export const addFruit = (size, number = 1) => {
   }
 
   return {
-    type: types.ADD_FRUIT,
+    type: types.FRUIT_ADD,
     payload: fruit
   };
 };
