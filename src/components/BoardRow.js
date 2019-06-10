@@ -2,8 +2,8 @@ import React from "react";
 
 import BoardSquare from "./BoardSquare";
 
-function BoardRow({ rowIndex, size, headPosition }) {
-  const row = buildRowOptions(rowIndex, size, headPosition);
+function BoardRow({ rowIndex, size }) {
+  const row = buildRowOptions(rowIndex, size);
 
   return (
     <div
@@ -20,13 +20,12 @@ function BoardRow({ rowIndex, size, headPosition }) {
 
 export default BoardRow;
 
-function buildRowOptions(rowIndex, size, headPosition) {
+function buildRowOptions(rowIndex, size) {
   let columnIndex = 1;
   const row = [];
 
   for (columnIndex; columnIndex <= size; columnIndex++) {
     const options = {
-      headPosition,
       rowIndex,
       columnIndex,
       key: columnIndex

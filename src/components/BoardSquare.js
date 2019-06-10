@@ -32,7 +32,10 @@ function BoardSquare({
 }
 
 const mapStateToProps = state => {
-  return { fruitPositions: state.fruit.fruitPositions };
+  return {
+    headPosition: state.snake.headPosition,
+    fruitPositions: state.fruit.fruitPositions
+  };
 };
 
 export default connect(mapStateToProps)(BoardSquare);
@@ -47,8 +50,6 @@ function setSquareColor(
   if (rowIndex === headPosition.depth && columnIndex === headPosition.width) {
     return "green";
   }
-
-  // console.log(fruitPositions);
 
   for (let i = 0; i < fruitPositions.length; i++) {
     let fruit = fruitPositions[i];

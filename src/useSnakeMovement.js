@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-function useSnakeMovement(startingPosition, size) {
-  let [headPosition, setHeadPosition] = useState(startingPosition);
-  let [direction, setDirection] = useState("up");
-
+function useSnakeMovement(
+  headPosition,
+  size,
+  changePosition,
+  changeDirection,
+  direction
+) {
   let moveUp = () => {
     let newDepth = headPosition.depth - 1;
 
@@ -11,7 +14,7 @@ function useSnakeMovement(startingPosition, size) {
       newDepth = size - 1;
     }
 
-    setHeadPosition({
+    changePosition({
       width: headPosition.width,
       depth: newDepth
     });
@@ -24,7 +27,7 @@ function useSnakeMovement(startingPosition, size) {
       newDepth = 2;
     }
 
-    setHeadPosition({
+    changePosition({
       width: headPosition.width,
       depth: newDepth
     });
@@ -37,7 +40,7 @@ function useSnakeMovement(startingPosition, size) {
       newWidth = size - 1;
     }
 
-    setHeadPosition({
+    changePosition({
       depth: headPosition.depth,
       width: newWidth
     });
@@ -50,38 +53,23 @@ function useSnakeMovement(startingPosition, size) {
       newWidth = 2;
     }
 
-    setHeadPosition({
+    changePosition({
       depth: headPosition.depth,
       width: newWidth
     });
   };
 
   useEffect(() => {
-    const keyboardActions = {
-      up: moveUp,
-      down: moveDown,
-      left: moveLeft,
-      right: moveRight
-    };
-
-    const id = setInterval(keyboardActions[direction], 100);
-
-    return () => {
-      clearInterval(id);
-    };
-  });
-
-  useEffect(() => {
     const handleKeyboardEvents = e => {
       const keyboardActions = {
-        ArrowUp: "up",
-        ArrowDown: "down",
-        ArrowLeft: "left",
-        ArrowRight: "right"
+        ArrowUp: "UP",
+        ArrowDown: "DOWN",
+        ArrowLeft: "LEFT",
+        ArrowRight: "RIGHT"
       };
 
       if (Object.keys(keyboardActions).includes(e.key)) {
-        setDirection(keyboardActions[e.key]);
+        changeDirection(keyboardActions[e.key]);
       }
     };
 
@@ -90,7 +78,22 @@ function useSnakeMovement(startingPosition, size) {
     return () => {
       window.removeEventListener("keyup", handleKeyboardEvents);
     };
-  }, [headPosition.width, headPosition.depth]);
+  }, [changeDirection, headPosition.width, headPosition.depth]);
+
+  useEffect(() => {
+    const keyboardActions = {
+      UP: moveUp,
+      DOWN: moveDown,
+      LEFT: moveLeft,
+      RIGHT: moveRight
+    };
+
+    const id = setInterval(keyboardActions[direction], 100);
+
+    return () => {
+      clearInterval(id);
+    };
+  });
 
   return headPosition;
 }

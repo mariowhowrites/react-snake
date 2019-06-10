@@ -4,20 +4,9 @@ import * as types from "./types";
  * Direction actions
  */
 
-export const moveUp = () => ({
-  type: types.MOVE_UP
-});
-
-export const moveDown = () => ({
-  type: types.MOVE_DOWN
-});
-
-export const moveLeft = () => ({
-  type: types.MOVE_LEFT
-});
-
-export const moveRight = () => ({
-  type: types.MOVE_UP
+export const changeDirection = direction => ({
+  type: types.CHANGE_DIRECTION,
+  payload: direction
 });
 
 /**
@@ -35,8 +24,6 @@ export const changePosition = position => ({
 
 export const addFruit = (size, number = 1) => {
   const fruit = [];
-
-  console.log(size, number);
 
   for (let i = 0; i < number; i++) {
     fruit.push(makeFruit(size));

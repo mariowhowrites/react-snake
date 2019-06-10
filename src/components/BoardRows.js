@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import BoardRow from "./BoardRow";
 
-function BoardRows({ headPosition, size }) {
+function BoardRows({ size }) {
   let rows = [];
   let i = 1;
 
@@ -11,8 +11,7 @@ function BoardRows({ headPosition, size }) {
     rows.push({
       key: i,
       rowIndex: i,
-      size,
-      headPosition
+      size
     });
   }
 
@@ -26,7 +25,7 @@ function BoardRows({ headPosition, size }) {
 }
 
 const mapStateToProps = state => ({
-  size: state.board.size
+  size: state.game.size
 });
 
 export default connect(mapStateToProps)(BoardRows);
