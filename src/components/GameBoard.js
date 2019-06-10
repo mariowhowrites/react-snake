@@ -25,6 +25,30 @@ function GameBoard({
     direction
   );
 
+  let keysBound;
+
+  const handleKeyboardEvents = e => {
+    const keyboardActions = {
+      ArrowUp: "UP",
+      ArrowDown: "DOWN",
+      ArrowLeft: "LEFT",
+      ArrowRight: "RIGHT"
+    };
+
+    if (Object.keys(keyboardActions).includes(e.key)) {
+      changeDirection(keyboardActions[e.key]);
+    }
+  };
+
+  if (playing) {
+    window.addEventListener("keyup", handleKeyboardEvents);
+    keysBound = true;
+  }
+
+  if (!playing && keysBound) {
+    window.removeEventListener("keyup", handleKeyboardEvents);
+  }
+
   return (
     <div
       style={{
@@ -34,7 +58,20 @@ function GameBoard({
       }}
     >
       <BoardRows />
-      {!playing && <button onClick={startGame}>Start Game</button>}
+      {!playing && (
+        <button
+          style={{
+            backgroundColor: "green",
+            color: "white",
+            padding: "0.4rem 1rem",
+            alignSelf: "flex-start",
+            marginTop: "2rem"
+          }}
+          onClick={startGame}
+        >
+          Start Game
+        </button>
+      )}
       <p>SCORE: {score}</p>
       <p>High Scores:</p>
       <ol>

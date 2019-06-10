@@ -15,31 +15,6 @@ function useSnakeMovement(
       return;
     }
 
-    const handleKeyboardEvents = e => {
-      const keyboardActions = {
-        ArrowUp: "UP",
-        ArrowDown: "DOWN",
-        ArrowLeft: "LEFT",
-        ArrowRight: "RIGHT"
-      };
-
-      if (Object.keys(keyboardActions).includes(e.key)) {
-        changeDirection(keyboardActions[e.key]);
-      }
-    };
-
-    window.addEventListener("keyup", handleKeyboardEvents);
-
-    return () => {
-      window.removeEventListener("keyup", handleKeyboardEvents);
-    };
-  }, [changeDirection, headPosition, playing]);
-
-  useEffect(() => {
-    if (!playing) {
-      return;
-    }
-
     let moveUp = () => {
       let newDepth = headPosition.depth - 1;
 

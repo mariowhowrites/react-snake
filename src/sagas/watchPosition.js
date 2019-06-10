@@ -23,7 +23,7 @@ function* handlePositionChange({ payload }) {
   });
 
   if (gameIsOver) {
-    yield put({ types: types.GAME_END });
+    yield put({ type: types.GAME_END });
     return;
   }
 
