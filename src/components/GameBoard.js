@@ -6,7 +6,7 @@ import useSnakeMovement from "../useSnakeMovement";
 import { addFruit, changePosition, changeDirection } from "../store/actions";
 
 function GameBoard({
-  headPosition,
+  snake,
   size,
   score,
   addFruit,
@@ -14,13 +14,8 @@ function GameBoard({
   changePosition,
   direction
 }) {
-  useSnakeMovement(
-    headPosition,
-    size,
-    changePosition,
-    changeDirection,
-    direction
-  );
+
+  useSnakeMovement(snake, size, changePosition, changeDirection, direction);
 
   useEffect(() => {
     addFruit(size, 2);
@@ -42,7 +37,7 @@ function GameBoard({
 
 const mapStateToProps = state => {
   return {
-    headPosition: state.snake.headPosition,
+    snake: state.snake.snake,
     size: state.game.size,
     score: state.game.score,
     direction: state.snake.direction

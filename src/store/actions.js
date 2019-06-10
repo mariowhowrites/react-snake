@@ -13,10 +13,12 @@ export const changeDirection = direction => ({
  * POSITION ACTIONS
  */
 
-export const changePosition = position => ({
-  type: types.CHANGE_POSITION,
-  payload: position
-});
+export const changePosition = position => {
+  return {
+    type: types.CHANGE_POSITION,
+    payload: position
+  };
+};
 
 /**
  * FRUIT ACTIONS

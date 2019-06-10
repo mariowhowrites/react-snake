@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 
 function useSnakeMovement(
-  headPosition,
+  snake,
   size,
   changePosition,
   changeDirection,
   direction
 ) {
+  const headPosition = snake[0];
   let moveUp = () => {
     let newDepth = headPosition.depth - 1;
 

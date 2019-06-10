@@ -5,7 +5,7 @@ function BoardSquare({
   isBorder,
   columnIndex,
   rowIndex,
-  headPosition,
+  snake,
   fruitPositions
 }) {
   const styles = {
@@ -15,7 +15,7 @@ function BoardSquare({
       isBorder,
       rowIndex,
       columnIndex,
-      headPosition,
+      snake,
       fruitPositions
     )
   };
@@ -33,7 +33,7 @@ function BoardSquare({
 
 const mapStateToProps = state => {
   return {
-    headPosition: state.snake.headPosition,
+    snake: state.snake.snake,
     fruitPositions: state.fruit.fruitPositions
   };
 };
@@ -44,11 +44,18 @@ function setSquareColor(
   isBorder,
   rowIndex,
   columnIndex,
-  headPosition,
+  snake,
   fruitPositions
 ) {
-  if (rowIndex === headPosition.depth && columnIndex === headPosition.width) {
-    return "green";
+  for (let i = 0; i < snake.length; i++) {
+    let snakePosition = snake[i];
+
+    if (
+      rowIndex === snakePosition.depth &&
+      columnIndex === snakePosition.width
+    ) {
+      return "green";
+    }
   }
 
   for (let i = 0; i < fruitPositions.length; i++) {
